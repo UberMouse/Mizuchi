@@ -18,7 +18,7 @@ trait FileManagerService extends HttpService {
       get {
         respondWithMediaType(`text/html`) {
           complete {
-            <foo></foo>
+            <h1>SUP</h1>
           }
         }
       }

@@ -1,5 +1,3 @@
-import spray.revolver.RevolverPlugin.Revolver
-
 name          := "MediaFileManager"
 
 version       := "0.1"
@@ -21,9 +19,3 @@ libraryDependencies ++= {
     "org.specs2"          %%  "specs2-core"   % "2.3.7" % "test"
   )
 }
-
-lazy val root = (project in file(".")).enablePlugins(SbtTwirl)
-
-TwirlKeys.templateImports += "octopus._"
-
-Revolver.settings
