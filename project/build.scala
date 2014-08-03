@@ -1,18 +1,16 @@
 import sbt._
-import Keys._
+import sbt.Keys._
 import spray.revolver.RevolverPlugin.Revolver
 import play.twirl.sbt.SbtTwirl
 
 object MediaFileManagerBuild extends Build {
-    lazy val root = project.in(file(".")).aggregate(manager, processor)
-    lazy val manager = Project(id = "manager", base = file("manager")) dependsOn processor
-    lazy val processor = uri("processor")
+  lazy val root = project.in(file(".")).aggregate(manager, processor).settings(net.virtualvoid.sbt.graph.Plugin.graphSettings: _*)
+  lazy val common = uri("common")
+  lazy val manager = Project(id = "manager", base = file("manager")).dependsOn(common, processor).settings(net.virtualvoid.sbt.graph.Plugin.graphSettings: _*)
+  lazy val processor = Project(id = "processor", base = file("processor")).dependsOn(common).settings(net.virtualvoid.sbt.graph.Plugin.graphSettings: _*)
 
-    root.enablePlugins(SbtTwirl)
+  root.enablePlugins(SbtTwirl)
 
-    name           := "MediaFileManager"
-    version        := "0.1"
-    scalaVersion   := "2.10.3"
-    scalacOptions  := Seq("-unchecked", "-deprecation", "-encoding", "utf8")
-    Revolver.settings
+
+  Revolver.settings
 }

@@ -1,15 +1,28 @@
 import akka.actor.{ActorSystem, Props}
 import akka.io.IO
+import database.DatabaseModule
+import scaldi.akka.AkkaInjectable
+import scaldi.Module
+import shows.ShowModule
 import spray.can.Http
 import akka.pattern.ask
 import akka.util.Timeout
 import scala.concurrent.duration._
 
-object Boot extends App {
+class AkkaModule extends Module {
+  bind [ActorSystem] to ActorSystem("web-responders") destroyWith(_.shutdown())
+}
 
-  implicit val system = ActorSystem("web-responders")
+class FileManagerModule extends Module {
+  bind [ServiceActor] toProvider injected [FileManagerServiceActor]
+}
 
-  val service = system.actorOf(Props[FileManagerServiceActor], "file-manager-service")
+object Boot extends App with AkkaInjectable {
+  implicit val appModule = new FileManagerModule :: new AkkaModule :: new DatabaseModule :: new ShowModule
+
+  implicit val system = inject [ActorSystem]
+
+  val service = injectActorRef [ServiceActor]
 
   implicit val timeout = Timeout(5.seconds)
 
