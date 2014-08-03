@@ -1,7 +1,6 @@
 import akka.actor.{ActorContext, Actor}
 import java.io.File
 import nz.ubermouse.anime.AnimeProcessor
-import octopus._
 import shapeless.get
 import shows.ShowManager
 import spray.routing._
@@ -23,13 +22,12 @@ class FileManagerServiceActor(processor: AnimeProcessor, showManager: ShowManage
   val routing = {
     path("forceProcess") {
       get {
-        complete {
-          val processFrom = new File("""G:\Downloads\Deluge\Completed\Anime""")
-          val processTo = new File("""G:\Videos\Anime""")
-          val showTitles = showManager.all.map(_.name)
+        val processFrom = new File("""G:\Downloads\Deluge\Completed\Anime""")
+        val processTo = new File("""G:\Videos\Anime""")
+        val showTitles = showManager.all.map(_.name)
 
-          processor.process(processFrom, processTo, showTitles)
-        }
+        processor.process(processFrom, processTo, showTitles)
+        complete(StatusCodes.NoContent, "")
       }
     } ~
     path("") {
