@@ -3,5 +3,7 @@ package database
 import shows.Show
 
 trait ShowDatabase {
-  def all: List[Show]
+  def all: Iterable[Show]
+  def add(show: Show): Unit
+  def last: Option[Show]
 }

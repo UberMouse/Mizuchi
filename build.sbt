@@ -1,4 +1,4 @@
-name           := "MediaFileManager"
+name           := "Tayasui Media"
 
 version        := "0.1"
 

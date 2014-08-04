@@ -1,6 +1,7 @@
 import akka.actor.{ActorSystem, Props}
 import akka.io.IO
 import database.DatabaseModule
+import nz.ubermouse.anime.ProcessorModule
 import scaldi.akka.AkkaInjectable
 import scaldi.Module
 import shows.ShowModule
@@ -18,7 +19,7 @@ class FileManagerModule extends Module {
 }
 
 object Boot extends App with AkkaInjectable {
-  implicit val appModule = new FileManagerModule :: new AkkaModule :: new DatabaseModule :: new ShowModule
+  implicit val appModule = new FileManagerModule :: new AkkaModule :: new DatabaseModule :: new ShowModule :: new ProcessorModule
 
   implicit val system = inject [ActorSystem]
 

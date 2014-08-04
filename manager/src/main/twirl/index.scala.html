@@ -1,9 +1,25 @@
-<!DOCTYPE html>
+@(showList: Iterable[shows.Show])
+
 <html>
 <head>
-  <title></title>
+  <title>MediaFileManager</title>
 </head>
 <body>
-
+    <form method="GET" action="/shows">
+        <input type="text" name="showName" />
+        <input type="submit" />
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+            </tr>
+        </thead>
+        @for(show <- showList) {
+            <tr>
+                <td>@show.name</td>
+            </tr>
+        }
+    </table>
 </body>
 </html>

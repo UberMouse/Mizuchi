@@ -2,7 +2,7 @@ import akka.actor.{ActorContext, Actor}
 import java.io.File
 import nz.ubermouse.anime.AnimeProcessor
 import shapeless.get
-import shows.ShowManager
+import shows.{Show, ShowManager}
 import spray.routing._
 import spray.http._
 import MediaTypes._
@@ -27,14 +27,22 @@ class FileManagerServiceActor(processor: AnimeProcessor, showManager: ShowManage
         val showTitles = showManager.all.map(_.name)
 
         processor.process(processFrom, processTo, showTitles)
-        complete(StatusCodes.NoContent, "")
+        redirect("/", StatusCodes.TemporaryRedirect)
+      }
+    } ~
+    path("shows") {
+      get {
+        parameters('showName) {showName =>
+          showManager.add(showName)
+          redirect("/", StatusCodes.TemporaryRedirect)
+        }
       }
     } ~
     path("") {
       get {
         respondWithMediaType(`text/html`) {
           complete {
-            <h1>SUP</h1>
+            html.index.render(showManager.all).body
           }
         }
       }
