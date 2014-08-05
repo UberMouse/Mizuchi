@@ -22,12 +22,14 @@ class FileManagerServiceActor(processor: AnimeProcessor, showManager: ShowManage
   val routing = {
     path("forceProcess") {
       get {
-        val processFrom = new File("""G:\Downloads\Deluge\Completed\Anime""")
-        val processTo = new File("""G:\Videos\Anime""")
-        val showTitles = showManager.all.map(_.name)
+        complete {
+          val processFrom = new File("""G:\Downloads\Deluge\Completed\Anime""")
+          val processTo = new File("""G:\Videos\Anime""")
+          val showTitles = showManager.all.map(_.name)
 
-        processor.process(processFrom, processTo, showTitles)
-        redirect("/", StatusCodes.TemporaryRedirect)
+          processor.process(processFrom, processTo, showTitles)
+          StatusCodes.OK
+        }
       }
     } ~
     path("shows") {

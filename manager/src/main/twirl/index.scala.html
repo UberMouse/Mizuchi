@@ -3,11 +3,23 @@
 <html>
 <head>
   <title>MediaFileManager</title>
+  <script src="https://code.jquery.com/jquery-2.1.1.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    $(document ).ready(function() {
+        $("#processBtn" ).click(function(e) {
+            e.preventDefault();
+            $.get("/forceProcess");
+            return false;
+        })
+    });
+  </script>
 </head>
 <body>
     <form method="GET" action="/shows">
         <input type="text" name="showName" />
-        <input type="submit" />
+        <input type="submit"/>
+        @*Because I'm lazy*@
+        <input type="submit" id="processBtn" value="Process Downloads"/>
     </form>
     <table>
         <thead>
