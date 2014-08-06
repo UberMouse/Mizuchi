@@ -14,6 +14,7 @@ import akka.pattern.ask
 import scala.concurrent.Await
 import scala.concurrent.duration._
 import akka.util.Timeout
+import services.Messages.FileWatcherService.Monitor
 
 
 class FileManagerHttpService(implicit inj: Injector) extends Actor with ServiceActor with HttpService with AkkaInjectable {
@@ -25,7 +26,7 @@ class FileManagerHttpService(implicit inj: Injector) extends Actor with ServiceA
     path("forceProcess") {
       get {
         complete {
-          val processFrom = new File("""G:\Downloads\Deluge\Completed\Anime""")
+          val processFrom = new File( """G:\Downloads\Deluge\Completed\Anime""")
 
           manager ! ProcessDirectoryRequest(processFrom)
 

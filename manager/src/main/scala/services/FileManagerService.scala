@@ -7,11 +7,15 @@ import nz.ubermouse.processor.FileProcessor
 import shows.ShowManager
 import services.Messages.FileManagerService.RequestShows
 import java.io.File
+import services.Messages.FileWatcherService.{NewFile, Monitor}
 
 class FileManagerService(showManager: ShowManager)(implicit inj: Injector) extends ServiceActor with Actor with AkkaInjectable{
   import Messages.FileManagerService._
   import Messages.ProcessingService._
   val processor = injectActorRef[ProcessingService]
+  val watcher = injectActorRef[FileWatcherService]
+
+  watcher ! Monitor(new File( """G:\Downloads\Deluge\Completed\Anime""").toPath)
 
   def actorRefFactory: ActorContext = context
 
@@ -26,6 +30,7 @@ class FileManagerService(showManager: ShowManager)(implicit inj: Injector) exten
     case RequestShows() => {
       sender ! ShowsResponse(showManager.all)
     }
+    case NewFile(file) => self ! ProcessFileRequest(file)
     case _ => println("Fallthrough FileManager")
   }
 
