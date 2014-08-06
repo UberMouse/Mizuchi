@@ -2,12 +2,13 @@ package shows
 
 import database.ShowDatabase
 
-case class Show(id: Int, name: String)
+case class Show(name: String, id: Int = -1)
 
 class ShowManager(db: ShowDatabase) {
   def all = db.all
-  def add(name: String) = {
+  def add(show: Show) = {
     val lastId = db.last.map(_.id).getOrElse(0)
-    db.add(Show(lastId + 1, name))
+    //This is going to bite me later. Calling it now.
+    db.add(show.copy(id = lastId + 1))
   }
 }
