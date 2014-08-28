@@ -1,8 +1,9 @@
 package mizuchi.services
 
-import models.Show
 import play.api.db.slick.Session
+import mizuchi.models.Show
+import mizuchi.dao.ShowDao
 
-class ShowServiceImpl extends ShowService {
+class ShowServiceImpl(dao: ShowDao) extends ShowService {
   def list(implicit s: Session): Seq[Show] = null
 }

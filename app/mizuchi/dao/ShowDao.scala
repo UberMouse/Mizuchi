@@ -1,7 +1,7 @@
 package mizuchi.dao
 
-import models.Show
 import play.api.db.slick.Session
+import mizuchi.models.Show
 
 trait ShowDao {
   def all(implicit s: Session): Seq[Show]

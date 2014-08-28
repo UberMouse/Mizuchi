@@ -4,11 +4,6 @@ import org.scalatestplus.play.OneAppPerSuite
 import org.scalatest.BeforeAndAfterAll
 import play.api.db.slick.DB
 import play.api.db.slick.Config.driver.simple._
-import play.api.test._
-import play.api.test.Helpers._
-import models._
-import play.api.Play
-import mizuchi.tests.UnitSpec
 import mizuchi.models.{Show, ShowsTable}
 import mizuchi.tests.UnitSpec
 import mizuchi.dao.ShowDaoImpl

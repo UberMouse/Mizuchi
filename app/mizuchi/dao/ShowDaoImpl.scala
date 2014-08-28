@@ -1,9 +1,9 @@
 package mizuchi.dao
 
-import models.{ShowsTable, Show}
-import play.api.db.slick.{Session, DB}
+import play.api.db.slick.Session
 import scala.slick.lifted.TableQuery
 import play.api.db.slick.Config.driver.simple._
+import mizuchi.models._
 
 class ShowDaoImpl extends ShowDao {
   val table = TableQuery[ShowsTable]
