@@ -1,0 +1,5 @@
+package mizuchi
+
+object Global {
+
+}
