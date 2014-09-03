@@ -2,8 +2,11 @@ package mizuchi
 
 import mizuchi.services.ServiceModule
 import mizuchi.dao.DaoModule
-import play.api.GlobalSettings
+import play.api.{Application, GlobalSettings}
+import scaldi.play.ScaldiSupport
+import scaldi.{Module, Injector}
+import mizuchi.controllers.ControllerModule
 
-object Global extends GlobalSettings {
-  def appModule = new DaoModule :: new ServiceModule
+object Global extends GlobalSettings with ScaldiSupport {
+  def applicationModule: Injector = new DaoModule :: new ServiceModule :: new ControllerModule
 }
