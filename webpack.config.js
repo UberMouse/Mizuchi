@@ -8,7 +8,7 @@ module.exports = {
     entry: [
         'webpack-dev-server/client?http://localhost:3000',
         'webpack/hot/dev-server',
-        './app/mizuchi/assets/javascripts/main.coffee'
+        './app/mizuchi/assets/javascripts/boot.coffee'
     ],
     devtool: "eval",
     output: {
@@ -18,11 +18,12 @@ module.exports = {
     },
     resolve: {
         // Allow to omit extensions when requiring these files
-        extensions: ['', '.js', '.jsx', '.coffee', '.coffee.jsx']
+        extensions: ['', '.js', '.jsx', '.coffee', '.cjsx'] ,
+        root: path.join(__dirname, 'app/mizuchi/assets/javascripts')
     },
     module: {
         loaders: [
-            { test: /\.jsx/, loaders: ['react-hot'] },
+            { test: /\.cjsx/, loaders: ['coffee', 'react-hot'] },
             { test: /\.coffee$/, loader: 'coffee'}
         ]
     },

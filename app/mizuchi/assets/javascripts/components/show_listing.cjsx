@@ -3,5 +3,4 @@ R = React.DOM
 
 module.exports = React.createClass
   render: ->
-    R.li null,
-      R.p(null, @props.text1)
+    R.li null, @props.show.name
