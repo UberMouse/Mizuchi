@@ -16,5 +16,6 @@ libraryDependencies ++= Seq(
   "com.typesafe.play"   %% "play-slick"    % "0.8.0-M1",
   "org.scaldi"          %% "scaldi-play"   % "0.4",
   "io.argonaut"         %% "argonaut"      % "6.0.4",
+  "org.json4s"          %% "json4s-native" % "3.2.10",
   "org.scalatestplus"   %% "play"          % "1.1.0" % "test"
 )
