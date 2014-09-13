@@ -15,3 +15,4 @@ dist
 /.settings
 node_modules
 .DS_Store
+public/javascripts/bundle.js
