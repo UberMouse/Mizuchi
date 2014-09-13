@@ -3,7 +3,7 @@
 # ~~~~
 
 # Home page
-GET         /                     mizuchi.controllers.Application.index
+GET         /             @mizuchi.controllers.Application.index
 GET         /ws           @mizuchi.controllers.WebsocketController.connect
 
 # Map static resources from the /public folder to the /assets URL path

@@ -1,4 +1,5 @@
-@(title: String)
+@import mizuchi.models.Show
+@(title: String, shows: Seq[Show])
 
 <!DOCTYPE html>
 
@@ -10,6 +11,10 @@
         <script src="@routes.Assets.at("javascripts/bundle.js")" type="text/javascript"></script>
     </head>
     <body>
-       <div id="app"></div>
+        <ul>
+            @for(show <- shows) {
+                <li>@show.name</li>
+            }
+        </ul>
     </body>
 </html>
