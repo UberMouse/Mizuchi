@@ -3,8 +3,6 @@
 # ~~~~
 
 # Home page
-GET         /api/show/list        @mizuchi.controllers.ShowController.list
-POST        /api/show/create      @mizuchi.controllers.ShowController.create
 GET         /                     mizuchi.controllers.Application.index
 GET         /ws           @mizuchi.controllers.WebsocketController.connect
 

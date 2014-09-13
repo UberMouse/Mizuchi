@@ -1,12 +1,11 @@
 package mizuchi.models
 
 import play.api.db.slick.Config.driver.simple._
-import argonaut.Argonaut._
-
+import play.api.libs.json.Json
 case class Show(id: Int, name: String, hummingbird_id: String, tvdb_id: String)
 
 object Show {
-  implicit def ShowCodec = casecodec4(Show.apply, Show.unapply)("id", "name", "hummingbird_id", "tvdb_id")
+  implicit def ShowFormat = Json.format[Show]
 }
 
 class ShowsTable(tag: Tag) extends Table[Show](tag, "SHOWS") {

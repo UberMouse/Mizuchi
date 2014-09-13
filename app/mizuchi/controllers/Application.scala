@@ -6,7 +6,7 @@ import play.api.mvc._
 object Application extends Controller {
 
   def index = Action {
-   Ok(mizuchi.views.html.main("Index"))
+    Ok(mizuchi.views.html.main("Index"))
   }
 
 }

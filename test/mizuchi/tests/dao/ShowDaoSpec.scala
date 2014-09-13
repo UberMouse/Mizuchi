@@ -4,7 +4,7 @@ import org.scalatestplus.play.OneAppPerSuite
 import org.scalatest.BeforeAndAfterAll
 import play.api.db.slick.DB
 import play.api.db.slick.Config.driver.simple._
-import mizuchi.models.{Show, ShowsTable}
+import mizuchi.models.{ Show, ShowsTable }
 import mizuchi.tests.UnitSpec
 import mizuchi.dao.ShowDaoImpl
 
@@ -15,7 +15,7 @@ class ShowDaoSpec extends UnitSpec with OneAppPerSuite with BeforeAndAfterAll {
     Show(2, "Sword Art Online", "111", "125334")
   )
 
-  def insert(implicit s: Session) = table.insertAll(shows:_*)
+  def insert(implicit s: Session) = table.insertAll(shows: _*)
 
   describe("Show DAO") {
     it("Can retrieve all shows") {

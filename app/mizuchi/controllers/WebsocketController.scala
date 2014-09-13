@@ -1,48 +1,51 @@
 package mizuchi.controllers
 
-import scaldi.{Injectable, Injector}
+import scaldi.{ Injectable, Injector }
 import play.api.mvc._
 import play.api.libs.iteratee._
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
-import mizuchi.models.{Show, ActionResult, Action}
-import mizuchi.dao.ShowDao
+import mizuchi.models.{ Show, ActionResult, Action }
+import muster.codec.play._
+import muster.codec.play.api._
+
+import play.api.libs.json.Json
+import mizuchi.sync.ActionDispatcher
 import play.api.Logger
-import play.api.Play.current
-import org.json4s._
-import org.json4s.native.Serialization
-import org.json4s.native.Serialization.{read, write}
-import native.JsonMethods
 
 class WebsocketController(implicit inj: Injector) extends Controller with Injectable {
-
-
+  val dispatcher = inject[ActionDispatcher]
+  val logger = Logger.logger
 
   def connect = WebSocket.using[String] { request =>
     // Concurrent.broadcast returns (Enumerator, Concurrent.Channel)
     val (out, channel) = Concurrent.broadcast[String]
 
     // log the message to stdout and send response back to client
-    val in = Iteratee.foreach[String] { msg =>
-
+    val in = Iteratee.foreach[String] { actionJson =>
+      logger.info(s"Received action: $actionJson")
+      val parse = Json.parse(actionJson)
+      var action: Action = null
+      //doesn't output exceptions from .as call unless this filth is here
+      try {
+        action = PlayJsonCodec.as[Action](parse)
+      } catch {
+        case e: Throwable => {
+          logger.info("Error parsing action")
+          e.printStackTrace()
+        }
+      }
+      if (action != null) {
+        logger.info(s"Parsed into: $action")
+        val result = dispatcher(action)
+        if (result.isFailure)
+          result.failed.get.printStackTrace()
+        result.map(f => f.onComplete(r => r.foreach(ar => {
+          channel push ar.asJsValue.toString()
+          logger.info(s"Sent ActionResult for message id ${ar.actionId} to client")
+          logger.info(ar.toString)
+        })))
+      }
     }
     (in, out)
   }
-
-//  private def handleAction(action: Action): ActionResult = action.action_name match {
-//    case "CREATE_SHOW" => {
-//      logger.info("Handling CREATE_SHOW action")
-//      val name = action.args("name")
-//      val show = Show(-1, name, "1", "1")
-//      play.api.db.slick.DB.withSession {
-//        implicit s =>
-//          showDao.insert(show)
-//      }
-//      logger.info(s"Inserted show: $show")
-//      ActionResult(success = true)
-//    }
-//    case _ => {
-//      logger.info(s"Action (${action.action_name}) not handled")
-//      ActionResult(success = false, message = Option(s"${action.action_name} is not a valid action"))
-//    }
-//  }
 }

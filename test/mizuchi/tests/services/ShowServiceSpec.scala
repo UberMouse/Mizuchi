@@ -1,7 +1,7 @@
 package mizuchi.tests.services
 
 import org.scalatestplus.play.OneAppPerSuite
-import scaldi.{Module, Injectable}
+import scaldi.{ Module, Injectable }
 import mizuchi.tests.UnitSpec
 import mizuchi.services.ShowService
 import mizuchi.models.Show

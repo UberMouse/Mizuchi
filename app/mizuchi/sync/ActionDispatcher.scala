@@ -1,8 +1,9 @@
-package mizuchi.services
+package mizuchi.sync
 
-import mizuchi.models.{Action, ActionResult}
-import scala.concurrent.Future
+import mizuchi.models.{ ActionResult, Action }
 import scala.util.Try
+import scala.concurrent.Future
+import mizuchi.sync.actions.ActionHandler
 
 trait ActionDispatcher {
   type ActionPublisher = (Action) => Try[Future[ActionResult]]
@@ -11,6 +12,3 @@ trait ActionDispatcher {
   def registerActionHandler(actionName: String, handler: ActionHandler): Try[ActionPublisher]
 }
 
-trait ActionHandler {
-  def apply(action: Action): Future[ActionResult]
-}
