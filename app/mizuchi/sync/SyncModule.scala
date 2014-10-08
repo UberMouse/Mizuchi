@@ -5,5 +5,4 @@ import mizuchi.sync.actions.CreateShow
 
 class SyncModule extends Module {
   bind[ActionDispatcher] to injected[ActionDispatcherImpl]
-  bind[CreateShow] toNonLazy new CreateShow
 }
