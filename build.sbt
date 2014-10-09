@@ -1,9 +1,22 @@
-name           := "Tayasui Media"
+import play.PlayScala
 
-version        := "0.1"
+name := """Mizuchi"""
 
-scalaVersion   := "2.11.0"
+version := "0.1"
 
-scalacOptions  := Seq("-unchecked", "-deprecation", "-encoding", "utf8")
+lazy val mizuchi = (project in file(".")).enablePlugins(PlayScala)
 
-javaOptions := Seq("-Xdebug", "-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005")
+scalariformSettings
+
+scalaVersion := "2.11.1"
+
+libraryDependencies ++= Seq(
+  jdbc,
+  cache,
+  ws,
+  "org.xerial"          % "sqlite-jdbc"    % "3.7.2",
+  "com.typesafe.play"   %% "play-slick"    % "0.8.0-M1",
+  "org.scaldi"          %% "scaldi-play"   % "0.4",
+  "org.json4s"          %% "muster-codec-play-json" % "0.3.0",
+  "org.scalatestplus"   %% "play"          % "1.1.0" % "test"
+)
