@@ -8,7 +8,15 @@ import scaldi.{ Module, Injector }
 import mizuchi.controllers.ControllerModule
 import mizuchi.sync.SyncModule
 import mizuchi.sync.actions.ActionModule
+import nz.ubermouse.hummingbird.HummingbirdModule
 
 object Global extends GlobalSettings with ScaldiSupport {
-  def applicationModule: Injector = new DaoModule :: new ServiceModule :: new ControllerModule :: new SyncModule :: new ActionModule
+  def applicationModule: Injector = {
+    new DaoModule ::
+    new ServiceModule ::
+    new ControllerModule ::
+    new SyncModule ::
+    new ActionModule ::
+    new HummingbirdModule
+  }
 }
