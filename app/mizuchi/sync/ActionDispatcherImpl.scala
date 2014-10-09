@@ -10,7 +10,7 @@ class ActionDispatcherImpl extends ActionDispatcher {
   val handlers_mapping = mutable.HashMap[String, ActionHandler]()
 
   def apply(action: Action): Try[Future[ActionResult]] = {
-    val handler = handlers_mapping.get(action.action_name).getOrElse(null)
+    val handler = handlers_mapping.get(action.name).getOrElse(null)
     if (handler == null) return Failure(new Exception("No Action Handler Registered"))
     Success[Future[ActionResult]](handler(action))
   }

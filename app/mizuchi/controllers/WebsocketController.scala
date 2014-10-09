@@ -41,7 +41,7 @@ class WebsocketController(implicit inj: Injector) extends Controller with Inject
           result.failed.get.printStackTrace()
         result.map(f => f.onComplete(r => r.foreach(ar => {
           channel push ar.asJsValue.toString()
-          logger.info(s"Sent ActionResult for message id ${ar.actionId} to client")
+          logger.info(s"Sent ActionResult for message id ${ar.id} to client")
           logger.info(ar.toString)
         })))
       }
