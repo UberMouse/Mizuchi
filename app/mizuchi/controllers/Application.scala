@@ -7,7 +7,7 @@ import mizuchi.services.ShowService
 
 class Application extends Controller {
 
-  def index = Action {
+  def index(path: String) = Action {
     Ok(mizuchi.views.html.main())
   }
 

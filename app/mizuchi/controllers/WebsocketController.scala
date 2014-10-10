@@ -11,6 +11,8 @@ import muster.codec.play.api._
 import play.api.libs.json.Json
 import mizuchi.sync.ActionDispatcher
 import play.api.Logger
+import scala.concurrent.Future
+import scala.util.{ Failure, Success }
 
 class WebsocketController(implicit inj: Injector) extends Controller with Injectable {
   val dispatcher = inject[ActionDispatcher]
@@ -36,14 +38,16 @@ class WebsocketController(implicit inj: Injector) extends Controller with Inject
       }
       if (action != null) {
         logger.info(s"Parsed into: $action")
-        val result = dispatcher(action)
-        if (result.isFailure)
-          result.failed.get.printStackTrace()
-        result.map(f => f.onComplete(r => r.foreach(ar => {
-          channel push ar.asJsValue.toString()
-          logger.info(s"Sent ActionResult for message id ${ar.id} to client")
-          logger.info(ar.toString)
-        })))
+        dispatcher(action) match {
+          case Success(futureResult) => futureResult.onComplete {
+            case Success(result) =>
+              channel push result.asJsValue.toString()
+              logger.info(s"Sent ActionResult for message id ${result.id} to client")
+              logger.info(result.toString)
+            case Failure(ex) => ex.printStackTrace()
+          }
+          case Failure(ex) => ex.printStackTrace()
+        }
       }
     }
     (in, out)
