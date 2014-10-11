@@ -14,13 +14,13 @@ class Initialize(implicit inj: Injector) extends ActionHandler("INIT") with Inje
 
   def process(action: Action): ActionResult = {
     val args = DB.withSession { implicit s =>
-      InitializeArgs(shows.list)
+      InitializeArgs(shows.list.toList)
     }
     ActionResult(action.id, success = true, Option(PlayJsonCodec.from(args).toString()))
   }
 }
 
-case class InitializeArgs(shows: Seq[Show])
+case class InitializeArgs(shows: List[Show])
 
 object InitializeArgs {
   implicit def format = Json.format[InitializeArgs]
