@@ -2,7 +2,7 @@ package mizuchi.models
 
 import play.api.db.slick.Config.driver.simple._
 import play.api.libs.json.Json
-case class Show(id: Int, name: String, hummingbird_id: String, tvdb_id: String)
+case class Show(id: Int, name: String, hummingbirdId: String, tvdbId: String)
 
 object Show {
   implicit def ShowFormat = Json.format[Show]
