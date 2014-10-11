@@ -21,15 +21,21 @@ class CreateShow(implicit inj: Injector) extends ActionHandler("CREATE_SHOW") wi
     } catch {
       case e => e.printStackTrace()
     }
-    showDao insert args.show
-    args.tvdbSeason.foreach(season => mappingDao.create(args.show.tvdb_id, Integer.valueOf(season)))
+    val showId = showDao insert Show(-1, args.name, args.hummingbirdId, args.tvdbId)
+    args.tvdbSeason.foreach(season => mappingDao.create(args.tvdbId, Integer.valueOf(season)))
 
-    ActionResult(action.id, success = true)
+    ActionResult(action.id, success = true, Option(PlayJsonCodec.from(CreateShowResponse(showDao.findById(showId).get)).toString()))
   }
 }
 
-case class CreateShowArgs(show: Show, tvdbSeason: Option[String])
+case class CreateShowArgs(name: String, tvdbId: String, hummingbirdId: String, tvdbSeason: Option[String])
 
 object CreateShowArgs {
   implicit def format = Json.format[CreateShowArgs]
+}
+
+case class CreateShowResponse(show: Show)
+
+object CreateShowResponse {
+  implicit def format = Json.format[CreateShowResponse]
 }
