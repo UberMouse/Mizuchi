@@ -21,7 +21,7 @@ class SearchHummingbird(implicit inj: Injector) extends ActionHandler("SEARCH_HU
     val result = hummingbird.search(args.searchText).flatMap {
       case x: Manga => None
       case x: Anime => Option(x)
-    }.map(x => SearchResult(x.canonical_title, s"http://hummingbird.me/anime/${x.slug}", x.poster_image))
+    }.map(x => SearchResult(x.canonical_title, s"http://hummingbird.me/anime/${x.slug}", x.poster_image, x.slug))
     ActionResult(action.id, success = true, Option(PlayJsonCodec.from(SearchHummingbirdResponse(result.toList)).toString()))
   }
 }
@@ -30,7 +30,7 @@ case class SearchHummingbirdArgs(searchText: String)
 object SearchHummingbirdArgs {
   implicit def format = Json.format[SearchHummingbirdArgs]
 }
-case class SearchResult(name: String, show_url: String, poster_url: String)
+case class SearchResult(name: String, show_url: String, poster_url: String, hummingbirdId: String)
 object SearchResult {
   implicit def format = Json.format[SearchResult]
 }
