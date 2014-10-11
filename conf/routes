@@ -3,6 +3,7 @@
 # ~~~~
 
 # Home page
+GET         /             @mizuchi.controllers.Application.index(path = "")
 GET         /ws           @mizuchi.controllers.WebsocketController.connect
 GET         /*path        @mizuchi.controllers.Application.index(path: String)
 
