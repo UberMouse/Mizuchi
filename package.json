@@ -1,0 +1,33 @@
+{
+  "name": "Mizuchi",
+  "version": "0.0.0",
+  "description": "Media Manager",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "/Applications/nwjs.app/Contents/MacOS/nwjs ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/UberMouse/Mizuchi.git"
+  },
+  "author": "UberMouse",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/UberMouse/Mizuchi/issues"
+  },
+  "homepage": "https://github.com/UberMouse/Mizuchi",
+  "dependencies": {
+    "babel": "*",
+    "react": "*",
+    "react-bootstrap": "*",
+    "react-style": "*",
+    "bootstrap": "*",
+    "jquery": "*",
+    "pouchdb": "*",
+    "alt": "*",
+    "tcomb-form": "*",
+    "tcomb-react": "*",
+    "react-router": "*"
+  }
+}
